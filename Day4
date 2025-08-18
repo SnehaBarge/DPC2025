@@ -1,0 +1,66 @@
+import java.util.Arrays;
+
+public class MergeSortedArrays {
+
+    public void merge(int[] arr1, int m, int[] arr2, int n) {
+    int gap = (m + n + 1) / 2;
+    while (gap > 0) {
+        int i = 0, j = gap;
+
+        while (j < m + n) {
+            int aVal = (i < m) ? arr1[i] : arr2[i - m];
+            int bVal = (j < m) ? arr1[j] : arr2[j - m];
+
+            if (aVal > bVal) {
+                if (i < m && j < m) {
+                    swap(arr1, arr1, i, j);
+                } else if (i < m && j >= m) {
+                    swap(arr1, arr2, i, j - m);
+                } else {
+                    swap(arr2, arr2, i - m, j - m);
+                }
+            }
+            i++;
+            j++;
+        }
+
+        if (gap == 1) {
+            gap = 0;
+        } else {
+            gap = (gap + 1) / 2;
+        }
+    }
+}
+
+
+    private void swap(int[] a, int[] b, int i, int j) {
+        int temp = a[i];
+        a[i] = b[j];
+        b[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        MergeSortedArrays merger = new MergeSortedArrays();
+
+        int[] arr1 = {1, 3, 5, 7};
+        int[] arr2 = {2, 4, 6, 8};
+        int m = arr1.length;
+        int n = arr2.length;
+
+        merger.merge(arr1, m, arr2, n);
+        
+        System.out.println("Merged arr1: " + Arrays.toString(arr1));
+        System.out.println("Merged arr2: " + Arrays.toString(arr2));
+
+        // Another example
+        int[] arr3 = {10, 12};
+        int[] arr4 = {5, 18, 20};
+        int p = arr3.length;
+        int q = arr4.length;
+
+        merger.merge(arr3, p, arr4, q);
+        
+        System.out.println("\nMerged arr3: " + Arrays.toString(arr3));
+        System.out.println("Merged arr4: " + Arrays.toString(arr4));
+    }
+}
