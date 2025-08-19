@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class FindLeaders {
+
+    public List<Integer> findLeaders(int[] arr) {
+        List<Integer> leaders = new ArrayList<>();
+        if (arr == null || arr.length == 0) {
+            return leaders;
+        }
+
+        int maxFromRight = arr[arr.length - 1];
+        leaders.add(maxFromRight);
+
+        for (int i = arr.length - 2; i >= 0; i--) {
+            if (arr[i] > maxFromRight) {
+                maxFromRight = arr[i];
+                leaders.add(maxFromRight);
+            }
+        }
+        
+        Collections.reverse(leaders);
+        return leaders;
+    }
+
+    public static void main(String[] args) {
+        FindLeaders finder = new FindLeaders();
+
+        int[] arr = {16, 17, 4, 3, 5, 2};
+        List<Integer> result = finder.findLeaders(arr);
+        System.out.println("Leaders: " + result); // Expected: [17, 5, 2]
+
+        int[] arr2 = {1, 2, 3, 4, 5, 2};
+        List<Integer> result2 = finder.findLeaders(arr2);
+        System.out.println("Leaders: " + result2); // Expected: [5, 2]
+    }
+}
