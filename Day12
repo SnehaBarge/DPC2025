@@ -1,0 +1,44 @@
+import java.util.Stack;
+
+public class ValidParentheses {
+
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else if (c == ')') {
+                if (stack.isEmpty() || stack.pop() != '(') {
+                    return false;
+                }
+            } else if (c == '}') {
+                if (stack.isEmpty() || stack.pop() != '{') {
+                    return false;
+                }
+            } else if (c == ']') {
+                if (stack.isEmpty() || stack.pop() != '[') {
+                    return false;
+                }
+            }
+        }
+        
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        ValidParentheses checker = new ValidParentheses();
+        
+        String s1 = "[{()}]";
+        System.out.println("Is \"" + s1 + "\" valid? " + checker.isValid(s1)); // Expected: true
+        
+        String s2 = "()[]{}";
+        System.out.println("Is \"" + s2 + "\" valid? " + checker.isValid(s2)); // Expected: true
+        
+        String s3 = "([)]";
+        System.out.println("Is \"" + s3 + "\" valid? " + checker.isValid(s3)); // Expected: false
+        
+        String s4 = "{[()";
+        System.out.println("Is \"" + s4 + "\" valid? " + checker.isValid(s4)); // Expected: false
+    }
+}
