@@ -1,0 +1,52 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class SubstringsWithKDistinct {
+
+    public int countSubstrings(String s, int k) {
+        return countAtMostK(s, k) - countAtMostK(s, k - 1);
+    }
+
+    private int countAtMostK(String s, int k) {
+        if (k < 0) {
+            return 0;
+        }
+
+        int count = 0;
+        int left = 0;
+        Map<Character, Integer> charCount = new HashMap<>();
+
+        for (int right = 0; right < s.length(); right++) {
+            char rightChar = s.charAt(right);
+            charCount.put(rightChar, charCount.getOrDefault(rightChar, 0) + 1);
+
+            while (charCount.size() > k) {
+                char leftChar = s.charAt(left);
+                charCount.put(leftChar, charCount.get(leftChar) - 1);
+                if (charCount.get(leftChar) == 0) {
+                    charCount.remove(leftChar);
+                }
+                left++;
+            }
+
+            count += (right - left + 1);
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        SubstringsWithKDistinct solution = new SubstringsWithKDistinct();
+
+        String s1 = "pqpqs";
+        int k1 = 2;
+        System.out.println("String: \"" + s1 + "\", k: " + k1);
+        System.out.println("Number of substrings with exactly " + k1 + " distinct characters: " + solution.countSubstrings(s1, k1));
+        
+        System.out.println("----------------------------------------");
+
+        String s2 = "abcabc";
+        int k2 = 3;
+        System.out.println("String: \"" + s2 + "\", k: " + k2);
+        System.out.println("Number of substrings with exactly " + k2 + " distinct characters: " + solution.countSubstrings(s2, k2)); 
+    }
+}
