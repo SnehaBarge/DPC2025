@@ -1,0 +1,32 @@
+public class LCM {
+
+    private long findGCD(long a, long b) {
+        if (b == 0) {
+            return a;
+        }
+        return findGCD(b, a % b);
+    }
+
+    public long findLCM(long n, long m) {
+        if (n == 0 || m == 0) {
+            return 0;
+        }
+        return (n * m) / findGCD(n, m);
+    }
+
+    public static void main(String[] args) {
+        LCM calculator = new LCM();
+
+        long N1 = 4;
+        long M1 = 6;
+        System.out.println("LCM of " + N1 + " and " + M1 + " is: " + calculator.findLCM(N1, M1));
+
+        long N2 = 12;
+        long M2 = 18;
+        System.out.println("LCM of " + N2 + " and " + M2 + " is: " + calculator.findLCM(N2, M2));
+        
+        long N3 = 100;
+        long M3 = 75;
+        System.out.println("LCM of " + N3 + " and " + M3 + " is: " + calculator.findLCM(N3, M3));
+    }
+}
