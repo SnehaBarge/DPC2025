@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class PrimeFactorization {
+
+    public List<Integer> getPrimeFactors(int n) {
+        List<Integer> factors = new ArrayList<>();
+
+        while (n % 2 == 0) {
+            factors.add(2);
+            n /= 2;
+        }
+
+        int limit = (int) Math.sqrt(n); 
+        for (int i = 3; i <= limit && n > 1; i += 2) {
+            while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+
+        if (n > 2) {
+            factors.add(n);
+        }
+
+        return factors;
+    }
+
+    public static void main(String[] args) {
+        PrimeFactorization pf = new PrimeFactorization();
+
+        int n1 = 18;
+        System.out.println("Prime factors of " + n1 + ": " + pf.getPrimeFactors(n1)); 
+  
+
+        int n2 = 29;
+        System.out.println("Prime factors of " + n2 + ": " + pf.getPrimeFactors(n2)); 
+
+        int n3 = 100;
+        System.out.println("Prime factors of " + n3 + ": " + pf.getPrimeFactors(n3)); 
+    }
+}
