@@ -1,0 +1,49 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class CountDivisors {
+
+    public int countDivisors(int n) {
+        if (n == 1) {
+            return 1;
+        }
+
+        Map<Integer, Integer> primeFactors = new HashMap<>();
+
+        // Handle factor 2
+        while (n % 2 == 0) {
+            primeFactors.put(2, primeFactors.getOrDefault(2, 0) + 1);
+            n /= 2;
+        }
+
+        // Handle odd factors
+        for (int i = 3; i * i <= n; i += 2) {
+            while (n % i == 0) {
+                primeFactors.put(i, primeFactors.getOrDefault(i, 0) + 1);
+                n /= i;
+            }
+        }
+
+        // If n is a prime number greater than 2
+        if (n > 2) {
+            primeFactors.put(n, primeFactors.getOrDefault(n, 0) + 1);
+        }
+
+        int totalDivisors = 1;
+        for (int count : primeFactors.values()) {
+            totalDivisors *= (count + 1);
+        }
+
+        return totalDivisors;
+    }
+
+    public static void main(String[] args) {
+        CountDivisors calculator = new CountDivisors();
+
+        int n1 = 12;
+        System.out.println("The number of divisors for " + n1 + " is: " + calculator.countDivisors(n1)); // Expected: 6
+
+        int n2 = 100;
+        System.out.println("The number of divisors for " + n2 + " is: " + calculator.countDivisors(n2)); // Expected: 9
+    }
+}
