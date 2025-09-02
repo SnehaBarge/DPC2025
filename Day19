@@ -1,0 +1,50 @@
+import java.util.Stack;
+
+public class PostfixEvaluator {
+
+    public int evaluatePostfix(String expression) {
+        Stack<Integer> stack = new Stack<>();
+        String[] tokens = expression.split(" ");
+
+        for (String token : tokens) {
+            if (isOperator(token)) {
+                int operand2 = stack.pop();
+                int operand1 = stack.pop();
+                int result = performOperation(operand1, operand2, token);
+                stack.push(result);
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+        return stack.pop();
+    }
+
+    private boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    private int performOperation(int operand1, int operand2, String operator) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + operator);
+        }
+    }
+
+    public static void main(String[] args) {
+        PostfixEvaluator evaluator = new PostfixEvaluator();
+        
+        String exp1 = "2 1 + 3 *";
+        System.out.println("Expression: \"" + exp1 + "\" -> Result: " + evaluator.evaluatePostfix(exp1)); 
+        
+        String exp2 = "4 13 5 / +";
+        System.out.println("Expression: \"" + exp2 + "\" -> Result: " + evaluator.evaluatePostfix(exp2));
+    }
+}
